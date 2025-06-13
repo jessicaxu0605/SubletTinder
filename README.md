@@ -15,9 +15,3 @@ Windows:
 cd STBackend
 source stenv/scripts/activate
 ```
-
-Windows Powershell:
-```
-cd STBackend
-.\stenv\bin\Activate.ps1
-```
