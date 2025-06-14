@@ -2,16 +2,23 @@
 
 ## Backend
 
+Make virtual env (name it venv so you don't have to modify gitignore)
+
+```
+python -m venv venv
+```
+
+
 Mac:
 
 ```
 cd STBackend
-source stenv/bin/activate
+source venv/bin/activate
 ```
 
 Windows:
 
 ```
 cd STBackend
-source stenv/scripts/activate
+.\venv\Scripts\activate
 ```
