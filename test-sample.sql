@@ -7,6 +7,12 @@ INSERT INTO listings (
         ) VALUES (51, true, 1, '2025-09-01', '2025-12-31', 'female', 1001, 3, 2, 2, true, true, 'Sample description for a new listing')
         RETURNING id;
 
+INSERT INTO listing_amenities (listing_id, amenity_id)
+VALUES (103, 22), (103, 13), (103, 4);
+
+INSERT INTO photos (listing_id, url, label)
+VALUES (103, 'https://example.com/photo/103_1.jpg', 'living_room'), (103, 'https://example.com/photo/103_2.jpg', 'bathroom');
+
 -- Feature 2: Update Listing
 UPDATE listings
 SET asking_price = 123321, pet_friendly = TRUE
