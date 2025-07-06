@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr, Field
 from typing import Optional, List
 from datetime import date
 from enum import Enum
@@ -30,3 +30,22 @@ class ListingCreate(BaseModel):
     description: Optional[str] = None
     amenities: Optional[List[int]] = []
     photos: Optional[List[Photo]] = []
+
+class UserCreate(BaseModel):
+    id: int
+    first_name: str
+    last_name: str
+    password: str = Field(..., min_length=8)
+    email: EmailStr
+    profile_photo: Optional[str] = None
+
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str
+
+class UserResponse(BaseModel):
+    id: int
+    email: EmailStr
+    first_name: str
+    last_name: str
+    profile_photo: Optional[str] = None
