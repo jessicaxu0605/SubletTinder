@@ -32,6 +32,21 @@ class ListingCreate(BaseModel):
     amenities: Optional[List[int]] = []
     photos: Optional[List[Photo]] = []
 
+class ListingUpdate(BaseModel):
+    is_active: Optional[bool] = None
+    start_date: Optional[date] = None
+    end_date: Optional[date] = None
+    target_gender: Optional[GenderEnum] = None
+    asking_price: Optional[float] = None
+    num_bedrooms: Optional[int] = None
+    num_bathrooms: Optional[int] = None
+    pet_friendly: Optional[bool] = None
+    utilities_incl: Optional[bool] = None
+    description: Optional[str] = None
+    amenities: Optional[List[int]] = None
+    photos_to_add: Optional[List[Photo]] = None
+    photos_to_delete: Optional[List[str]] = None
+
 class UserCreate(BaseModel):
     id: int
     first_name: str
