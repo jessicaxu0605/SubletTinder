@@ -283,3 +283,74 @@ async def partial_update_listing(listing_id: int, listing: ListingUpdate):
 
     return {"message": "Listing updated successfully"}
 
+
+@router.patch("/listings/{listing_id}")
+async def partial_update_listing(listing_id: int, listing: ListingUpdate):
+    pool = await get_pool()
+    async with pool.acquire() as connection:
+        async with connection.transaction():
+            existing = await connection.fetchrow("SELECT * FROM listings WHERE id = $1", listing_id)
+            if not existing:
+                raise HTTPException(status_code=404, detail="Listing not found")
+
+            updated_values = {
+                "is_active": listing.is_active if listing.is_active is not None else existing["is_active"],
+                "start_date": listing.start_date if listing.start_date is not None else existing["start_date"],
+                "end_date": listing.end_date if listing.end_date is not None else existing["end_date"],
+                "target_gender": listing.target_gender.value if listing.target_gender is not None else existing["target_gender"],
+                "asking_price": listing.asking_price if listing.asking_price is not None else existing["asking_price"],
+                "num_bedrooms": listing.num_bedrooms if listing.num_bedrooms is not None else existing["num_bedrooms"],
+                "num_bathrooms": listing.num_bathrooms if listing.num_bathrooms is not None else existing["num_bathrooms"],
+                "pet_friendly": listing.pet_friendly if listing.pet_friendly is not None else existing["pet_friendly"],
+                "utilities_incl": listing.utilities_incl if listing.utilities_incl is not None else existing["utilities_incl"],
+                "description": listing.description if listing.description is not None else existing["description"],
+            }
+
+            update_query = """
+                UPDATE listings SET
+                    is_active = $1,
+                    start_date = $2,
+                    end_date = $3,
+                    target_gender = $4,
+                    asking_price = $5,
+                    num_bedrooms = $6,
+                    num_bathrooms = $7,
+                    pet_friendly = $8,
+                    utilities_incl = $9,
+                    description = $10
+                WHERE id = $11
+            """
+
+            try:
+                await connection.execute(update_query, *updated_values.values(), listing_id)
+
+                if listing.amenities is not None:
+                    await connection.execute("DELETE FROM listing_amenities WHERE listing_id = $1", listing_id)
+                    await insert_listing_amenities(connection, listing_id, listing.amenities)
+
+                if listing.photos_to_delete:
+                    await connection.execute(
+                        "DELETE FROM photos WHERE listing_id = $1 AND url = ANY($2::text[])",
+                        listing_id,
+                        listing.photos_to_delete
+                    )
+
+                if listing.photos_to_add:
+                    await insert_listing_photos_bulk(connection, listing_id, listing.photos_to_add)
+
+            except CheckViolationError as e:
+                # remaining constraints has no friendly language because we're not updating them
+                msg = str(e)
+                if "chk_start_date_future" in msg:
+                    detail = "Start date must be in the future."
+                elif "chk_term_length" in msg:
+                    detail = "The rental term must be at least the required minimum length."
+                else:
+                    detail = "Invalid data provided."
+                raise HTTPException(status_code=400, detail=detail)
+
+            except PostgresError as e:
+                raise HTTPException(status_code=500, detail="A database error occurred.")
+
+    return {"message": "Listing updated successfully"}
+
