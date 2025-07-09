@@ -169,3 +169,44 @@ async def deactivate_listing(listing_id: int, user_id: int):
         if not row:
             raise HTTPException(status_code=404, detail="Listing not found or user not authorized")
         return dict(row)
+
+@router.get("/listings/{listing_id}/matches")
+async def get_listing_matches(listing_id: int):
+    query = """
+WITH score_params AS (
+    SELECT
+        100.0 AS base_score,
+        1.01 AS distance_factor_base,
+        0.995 AS price_factor_base,
+        1.2 AS bathroom_factor_base,
+        100 AS utilities_adjustment,
+        1.2 AS building_type_factor,
+        1.5 AS gender_factor
+),
+listing AS (
+    SELECT * FROM listings WHERE id = $1
+)
+SELECT
+    l.asking_price,
+    rc.*,
+    (
+        p.base_score *
+        POWER(p.distance_factor_base, rc.distance_km) *
+        POWER(p.price_factor_base,
+            (l.asking_price + CASE WHEN rc.utilities_incl THEN 0 ELSE p.utilities_adjustment END) - rc.budget) *
+        POWER(p.bathroom_factor_base, (rc.num_bathrooms - l.num_bathrooms)) *
+        CASE WHEN rc.building_type_id = l.building_type_id THEN p.building_type_factor ELSE 1 END *
+        CASE WHEN rc.gender IS NULL OR rc.gender = l.target_gender THEN p.gender_factor ELSE 1 END
+    ) AS score
+FROM get_renter_candidates($1) rc, listing l, score_params p
+ORDER BY score DESC;
+    """
+
+    pool = await get_pool()
+    async with pool.acquire() as connection:
+        rows = await connection.fetch(query, listing_id)
+        if not rows:
+            return {"matches": [], "message": "No matches found for this listing"}
+        
+        matches = [dict(row) for row in rows]
+        return {"matches": matches, "count": len(matches)}
