@@ -1,6 +1,7 @@
 CREATE OR REPLACE FUNCTION get_listing_candidates(renter_id bigint)
 RETURNS TABLE (
     id bigint,
+    user_id bigint,
     is_active boolean,
     asking_price numeric,
     num_bedrooms integer,
@@ -20,6 +21,7 @@ BEGIN
     WITH base AS (
         SELECT
             l.id,
+            l.user_id,
             l.is_active,
             l.asking_price,
             l.num_bedrooms,
@@ -66,6 +68,7 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION get_renter_candidates(listing_id bigint)
 RETURNS TABLE (
     id bigint,
+    user_id bigint,
     is_active boolean,
     budget numeric,
     num_bedrooms integer,
@@ -85,6 +88,7 @@ BEGIN
     WITH base AS (
         SELECT
             r.id,
+            r.user_id,
             r.is_active,
             r.budget,
             r.num_bedrooms,

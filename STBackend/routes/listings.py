@@ -187,7 +187,6 @@ listing AS (
     SELECT * FROM listings WHERE id = $1
 )
 SELECT
-    l.asking_price,
     rc.*,
     (
         p.base_score *

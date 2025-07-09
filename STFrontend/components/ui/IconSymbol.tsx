@@ -24,6 +24,7 @@ const MAPPING = {
   "plus.circle.fill": "add-circle",
   "minus.circle.fill": "remove-circle",
   "mappin.and.ellipse": "location-on",
+  "x.circle.fill": "highlight-off",
 } as IconMapping;
 
 /**

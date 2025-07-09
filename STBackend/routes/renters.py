@@ -124,8 +124,17 @@ renter AS (
     SELECT * FROM renter_profiles WHERE id = $1
 )
 SELECT
-    r.budget,
-    lc.*,
+    lc.id,
+    lc.asking_price,
+    lc.num_bedrooms,
+    lc.num_bathrooms,
+    lc.start_date,
+    lc.end_date,
+    lc.address_string,
+    bt.type as building_type,
+    lister.first_name as lister_name,
+    photo.url as photo_url,
+    photo.label as photo_label,
     (
         p.base_score *
         POWER(p.distance_factor_base, lc.distance_km) *
@@ -135,7 +144,22 @@ SELECT
         CASE WHEN lc.building_type_id = r.building_type_id THEN p.building_type_factor ELSE 1 END *
         CASE WHEN lc.target_gender IS NULL OR lc.target_gender = r.gender THEN p.gender_factor ELSE 1 END
     ) AS score
-FROM get_listing_candidates($1) lc, renter r, score_params p
+FROM get_listing_candidates($1) lc
+JOIN renter r ON TRUE
+JOIN score_params p ON TRUE
+JOIN building_types bt ON lc.building_type_id = bt.id
+LEFT JOIN LATERAL (
+    SELECT url, label
+    FROM photos
+    WHERE photos.listing_id = lc.id
+    LIMIT 1
+) AS photo ON TRUE
+LEFT JOIN LATERAL (
+    SELECT first_name
+    FROM users
+    WHERE users.id = lc.user_id
+    LIMIT 1
+) AS lister ON TRUE
 ORDER BY score DESC;
     """
 
@@ -148,3 +172,21 @@ ORDER BY score DESC;
         matches = [dict(row) for row in rows]
         return {"matches": matches, "count": len(matches)}
 
+"""
+
+id bigint,
+    id bigint,
+    is_active boolean,
+    asking_price numeric,
+    num_bedrooms integer,
+    num_bathrooms integer,
+    start_date date,
+    end_date date,
+    pet_friendly boolean,
+    utilities_incl boolean,
+    locations_id bigint,
+    building_type_id integer,
+    target_gender gender_enum,
+    address_string character varying(255),
+    distance_km double precision
+"""
