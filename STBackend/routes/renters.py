@@ -1,7 +1,111 @@
 from fastapi import APIRouter, HTTPException, status
+from models import RenterProfileCreate
+from utils.location_helper import resolve_address_from_google, insert_location_if_not_exists
 from db import get_pool
 
 router = APIRouter()
+
+@router.post("/renters", status_code=status.HTTP_201_CREATED)
+async def create_renter_profile(profile: RenterProfileCreate):
+    if not profile.raw_address:
+        raise HTTPException(status_code=400, detail="Missing address")
+
+    try:
+        place_data = await resolve_address_from_google(profile.raw_address)
+
+        pool = await get_pool()
+        async with pool.acquire() as connection:
+            location_id = await insert_location_if_not_exists(connection, place_data)
+
+            query = """
+                INSERT INTO renter_profiles (
+                    user_id, locations_id, start_date, end_date,
+                    age, gender, budget, building_type_id,
+                    num_bedrooms, num_bathrooms, has_pet, bio
+                )
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+                RETURNING *
+            """
+
+            row = await connection.fetchrow(query,
+                profile.user_id,
+                location_id,
+                profile.start_date,
+                profile.end_date,
+                profile.age,
+                profile.gender.value,
+                profile.budget,
+                profile.building_type_id,
+                profile.num_bedrooms,
+                profile.num_bathrooms,
+                profile.has_pet,
+                profile.bio
+            )
+
+            if not row:
+                raise HTTPException(status_code=500, detail="Renter profile insert failed")
+
+            return {"message": "Renter profile created", "id": row["id"]}
+
+    except Exception as e:
+        if 'renter_profiles_user_id_key' in str(e):
+            raise HTTPException(status_code=400, detail="User already has a renter profile.")
+        elif 'chk_' in str(e):
+            raise HTTPException(status_code=400, detail=f"Constraint violation: {str(e)}")
+        else:
+            raise HTTPException(status_code=400, detail=f"Database error: {str(e)}")
+
+@router.get("/renters/{renter_id}")
+async def get_renter_profile(renter_id: int):
+    query = """
+        SELECT 
+            rp.id,
+            rp.user_id,
+            u.first_name || ' ' || u.last_name AS full_name,
+            u.email AS email,
+            rp.is_active,
+            rp.start_date,
+            rp.end_date,
+            rp.age,
+            rp.gender,
+            rp.budget,
+            rp.num_bedrooms,
+            rp.num_bathrooms,
+            rp.has_pet,
+            rp.bio,
+            loc.address_string,
+            loc.latitude,
+            loc.longitude,
+            bt.type AS building_type
+        FROM renter_profiles rp
+        JOIN users u ON rp.user_id = u.id
+        JOIN locations loc ON rp.locations_id = loc.id
+        LEFT JOIN building_types bt ON rp.building_type_id = bt.id
+        WHERE rp.id = $1
+    """
+
+    pool = await get_pool()
+    async with pool.acquire() as connection:
+        row = await connection.fetchrow(query, renter_id)
+        if not row:
+            raise HTTPException(status_code=404, detail="Renter profile not found")
+        return dict(row)
+
+@router.put("/renters/{renter_id}/deactivate/{user_id}")
+async def deactivate_renter_profile(renter_id: int, user_id: int):
+    query = """
+        UPDATE renter_profiles
+        SET is_active = FALSE
+        WHERE id = $1 AND user_id = $2
+        RETURNING *
+    """
+
+    pool = await get_pool()
+    async with pool.acquire() as connection:
+        row = await connection.fetchrow(query, renter_id, user_id)
+        if not row:
+            raise HTTPException(status_code=404, detail="Renter profile not found or user not authorized")
+        return dict(row)
 
 @router.get("/renters/{renter_id}/matches")
 async def get_renter_matches(renter_id: int):

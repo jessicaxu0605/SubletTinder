@@ -50,3 +50,19 @@ class UserResponse(BaseModel):
     first_name: str
     last_name: str
     profile_photo: Optional[str] = None
+
+class RenterProfileCreate(BaseModel):
+    user_id: int
+    is_active: bool
+    raw_address: str
+    locations_id: Optional[int] = None
+    start_date: date
+    end_date: date
+    age: int
+    gender: GenderEnum
+    budget: float
+    building_type_id: Optional[int]
+    num_bedrooms: int
+    num_bathrooms: int
+    has_pet: bool
+    bio: Optional[str]
