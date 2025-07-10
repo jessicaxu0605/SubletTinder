@@ -33,7 +33,6 @@ class ListingCreate(BaseModel):
     photos: Optional[List[Photo]] = []
 
 class ListingUpdate(BaseModel):
-    is_active: Optional[bool] = None
     start_date: Optional[date] = None
     end_date: Optional[date] = None
     target_gender: Optional[GenderEnum] = None

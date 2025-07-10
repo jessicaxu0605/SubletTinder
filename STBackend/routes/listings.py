@@ -223,7 +223,6 @@ async def partial_update_listing(listing_id: int, listing: ListingUpdate):
                 raise HTTPException(status_code=404, detail="Listing not found")
 
             updated_values = {
-                "is_active": listing.is_active if listing.is_active is not None else existing["is_active"],
                 "start_date": listing.start_date if listing.start_date is not None else existing["start_date"],
                 "end_date": listing.end_date if listing.end_date is not None else existing["end_date"],
                 "target_gender": listing.target_gender.value if listing.target_gender is not None else existing["target_gender"],
@@ -237,7 +236,6 @@ async def partial_update_listing(listing_id: int, listing: ListingUpdate):
 
             update_query = """
                 UPDATE listings SET
-                    is_active = $1,
                     start_date = $2,
                     end_date = $3,
                     target_gender = $4,
@@ -273,7 +271,7 @@ async def partial_update_listing(listing_id: int, listing: ListingUpdate):
                 if "chk_start_date_future" in msg:
                     detail = "Start date must be in the future."
                 elif "chk_term_length" in msg:
-                    detail = "The rental term must be at least the required minimum length."
+                    detail = "The rental term must be at least 1 month, at most 1 year"
                 else:
                     detail = "Invalid data provided."
                 raise HTTPException(status_code=400, detail=detail)
