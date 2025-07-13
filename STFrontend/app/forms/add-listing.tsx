@@ -14,7 +14,6 @@ export default function AddListingScreen() {
   const { user } = useAuth();
   const [form, setForm] = useState({
     user_id: user?.id || 0,
-    locations_id: "",
     start_date: "",
     end_date: "",
     target_gender: "",
