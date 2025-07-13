@@ -9,7 +9,7 @@ interface ButtonProps extends TouchableOpacityProps {
 const Button = ({ children, className = "", ...props }: ButtonProps) => (
   <TouchableOpacity
     {...props}
-    className={`mb-2 rounded bg-green-800 px-4 py-3 items-center ${
+    className={`mb-2 rounded-full bg-green-800 px-4 py-3 items-center ${
       props.disabled ? "bg-gray-400" : "bg-green-800"
     } ${className}`}
   >

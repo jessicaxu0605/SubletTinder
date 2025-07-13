@@ -11,7 +11,9 @@ export default function AuthLayout() {
     if (
       user &&
       // LITERALLY TWEAKING WHY IS IT THAT AFTER ROUTER PUSHES TO QUESTIONNAIRE, THE PATH IS STILL SIGNUP?!
-      !["/auth/questionnaire", "/auth/RenterForm", "/auth/signup"].includes(pathname)
+      !["/auth/questionnaire", "/auth/RenterForm", "/auth/signup"].includes(
+        pathname
+      )
     ) {
       router.replace("/(tabs)");
     }
@@ -23,7 +25,6 @@ export default function AuthLayout() {
       <Stack.Screen name="login" options={{ headerShown: false }} />
       <Stack.Screen name="signup" options={{ headerShown: false }} />
       <Stack.Screen name="questionnaire" options={{ headerShown: false }} />
-      <Stack.Screen name="RenterForm" options={{ headerShown: false }} />
     </Stack>
   );
 }

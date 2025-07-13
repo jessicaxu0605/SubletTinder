@@ -107,7 +107,7 @@ const MultiSelect = ({
     <>
       {/* Main select box */}
       <TouchableOpacity
-        className={`mb-3 bg-gray-100 border border-gray-300 rounded px-3 py-3 min-h-[42px] justify-center ${className}`}
+        className={`mb-3 bg-gray-100 border border-gray-300 rounded px-3 py-4 min-h-[42px] justify-center ${className}`}
         onPress={() => setModalVisible(true)}
         activeOpacity={0.8}
       >

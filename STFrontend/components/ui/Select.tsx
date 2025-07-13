@@ -11,6 +11,7 @@ import {
   Platform,
   Animated,
   Easing,
+  SafeAreaView,
 } from "react-native";
 
 interface Option {
@@ -40,7 +41,7 @@ const Select = ({
   const [modalVisible, setModalVisible] = useState(false);
   const [search, setSearch] = useState("");
   const [filteredOptions, setFilteredOptions] = useState(options);
-  const slideAnim = useRef(new Animated.Value(-40)).current;
+  const slideAnim = useRef(new Animated.Value(400)).current;
   const opacityAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -58,7 +59,7 @@ const Select = ({
   // Animate modal content on open
   useEffect(() => {
     if (modalVisible) {
-      slideAnim.setValue(-40);
+      slideAnim.setValue(400);
       opacityAnim.setValue(0);
       Animated.parallel([
         Animated.timing(slideAnim, {
@@ -81,7 +82,7 @@ const Select = ({
     <>
       {/* Main select box */}
       <TouchableOpacity
-        className={`mb-3 bg-gray-100 border border-gray-300 rounded px-3 py-3 min-h-[42px] justify-center ${className}`}
+        className={`mb-3 bg-gray-100 border border-gray-300 rounded-xl px-3 py-4 min-h-[42px] justify-center ${className}`}
         onPress={() => setModalVisible(true)}
         activeOpacity={0.8}
       >
@@ -101,65 +102,69 @@ const Select = ({
           className="flex-1"
         >
           <Pressable
-            className="flex-1 justify-start bg-black/40"
+            className="flex-1 bg-black/40"
             onPress={() => {
               setModalVisible(false);
             }}
           >
             <Animated.View
               style={{
+                position: "absolute",
+                left: 0,
+                right: 0,
+                bottom: 0,
                 opacity: opacityAnim,
                 transform: [{ translateY: slideAnim }],
                 maxHeight: "70%",
               }}
             >
-              <View className="bg-white rounded-b-2xl p-4 pt-8">
-                {/* Copy of select box at top for continuity */}
-                <View className="bg-gray-100 border border-gray-300 rounded px-3 py-3 mb-3 min-h-[42px] justify-center">
-                  <Text
-                    className={selectedLabel ? "text-[#222]" : "text-[#888]"}
-                  >
-                    {selectedLabel || placeholder}
-                  </Text>
-                </View>
-                {/* Search bar */}
-                {searchable && (
-                  <TextInput
-                    className="bg-gray-100 border border-gray-300 rounded px-3 py-2 mb-3"
-                    placeholder={searchPlaceholder}
-                    value={search}
-                    onChangeText={setSearch}
-                    autoFocus
-                  />
-                )}
-                {/* Options list */}
-                <FlatList
-                  data={filteredOptions}
-                  keyExtractor={(item) => String(item.value)}
-                  renderItem={({ item }) => (
-                    <Pressable
-                      className="px-3 py-3 border-b border-gray-100"
-                      onPress={() => {
-                        onValueChange(item.value);
-                        setModalVisible(false);
-                        setSearch("");
-                      }}
-                    >
-                      <Text
-                        className={
-                          value === item.value
-                            ? "text-green-700 font-bold"
-                            : "text-gray-800"
-                        }
-                      >
-                        {item.label}
-                      </Text>
-                    </Pressable>
+              <SafeAreaView
+                style={{
+                  backgroundColor: "#fff",
+                  borderTopLeftRadius: 16,
+                  borderTopRightRadius: 16,
+                }}
+              >
+                <View className="bg-white rounded-t-2xl p-4 pt-8">
+                  {/* Search bar */}
+                  {searchable && (
+                    <TextInput
+                      className="bg-gray-100 border border-gray-300 rounded px-3 py-3 mb-3"
+                      placeholder={searchPlaceholder}
+                      value={search}
+                      onChangeText={setSearch}
+                      autoFocus
+                    />
                   )}
-                  style={{ maxHeight: 250 }}
-                  keyboardShouldPersistTaps="handled"
-                />
-              </View>
+                  {/* Options list */}
+                  <FlatList
+                    data={filteredOptions}
+                    keyExtractor={(item) => String(item.value)}
+                    renderItem={({ item }) => (
+                      <Pressable
+                        className="px-3 py-3 border-b border-gray-100"
+                        onPress={() => {
+                          onValueChange(item.value);
+                          setModalVisible(false);
+                          setSearch("");
+                        }}
+                      >
+                        <Text
+                          className={
+                            value === item.value
+                              ? "text-green-700 font-bold"
+                              : "text-gray-800"
+                          }
+                        >
+                          {item.label}
+                        </Text>
+                      </Pressable>
+                    )}
+                    style={{ maxHeight: 250 }}
+                    keyboardShouldPersistTaps="handled"
+                  />
+                </View>
+              </SafeAreaView>
             </Animated.View>
           </Pressable>
         </KeyboardAvoidingView>

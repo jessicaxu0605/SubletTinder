@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
-import { Picker } from "@react-native-picker/picker";
 import { apiGet, apiPost } from "@/lib/api";
 import { useAuth } from "@/contexts/AuthContext";
 import Input from "@/components/ui/Input";
@@ -8,7 +7,8 @@ import Button from "@/components/ui/Button";
 import Select from "@/components/ui/Select";
 import Checkbox from "@/components/ui/Checkbox";
 import MultiSelect from "@/components/ui/MultiSelect";
-import { AddressAutocomplete } from "../../components/AddressAutocomplete";
+import { AddressAutocomplete } from "@/components/AddressAutocomplete";
+import DateRangePicker from "@/components/ui/DateRangePicker";
 
 export default function AddListingScreen() {
   const { user } = useAuth();
@@ -183,7 +183,21 @@ export default function AddListingScreen() {
       await apiPost("/listings", payload);
       setMessage("Listing created!");
     } catch (e: any) {
-      setMessage(e.message || "Error creating listing");
+      if (e.message && e.message.includes("chk_term_length")) {
+        setErrors((prev) => ({
+          ...prev,
+          check_constraint: "The term length should be at least a month.",
+        }));
+        setMessage("");
+      } else if (e.message && e.message.includes("chk_start_date_future")) {
+        setErrors((prev) => ({
+          ...prev,
+          check_constraint: "The start date must be in the future.",
+        }));
+        setMessage("");
+      } else {
+        setMessage(e.message || "Error creating listing");
+      }
     } finally {
       setLoading(false);
     }
@@ -202,30 +216,16 @@ export default function AddListingScreen() {
       <View className="bg-white">
         <Text className="text-4xl font-bold mb-6">Add a Listing</Text>
         {/* Dates */}
-        <View className="py-2">
-          <Text className="mb-1">Start Date</Text>
-          <Input
-            placeholder="YYYY-MM-DD"
-            value={form.start_date}
-            onChangeText={(v: string) => handleChange("start_date", v)}
-            className="mb-4"
-          />
-          {errors.start_date && (
-            <Text className="text-red-600 mb-2">{errors.start_date}</Text>
-          )}
-        </View>
-        <View className="py-2">
-          <Text className="mb-1">End Date</Text>
-          <Input
-            placeholder="YYYY-MM-DD"
-            value={form.end_date}
-            onChangeText={(v: string) => handleChange("end_date", v)}
-            className="mb-4"
-          />
-          {errors.end_date && (
-            <Text className="text-red-600 mb-2">{errors.end_date}</Text>
-          )}
-        </View>
+        <DateRangePicker
+          startDate={form.start_date}
+          endDate={form.end_date}
+          onStartDateChange={(date: string) => handleChange("start_date", date)}
+          onEndDateChange={(date: string) => handleChange("end_date", date)}
+          startDateError={errors.start_date}
+          endDateError={errors.end_date}
+          checkConstraintError={errors.check_constraint}
+          label="Term"
+        />
         <View className="py-2">
           <Text className="mb-1">Monthly Rent</Text>
           <Input

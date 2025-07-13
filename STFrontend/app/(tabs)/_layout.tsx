@@ -37,15 +37,6 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="add-listing"
-        options={{
-          title: "Add Listing",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="plus.circle.fill" color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="deactivate-listing"
         options={{
           title: "Deactivate",

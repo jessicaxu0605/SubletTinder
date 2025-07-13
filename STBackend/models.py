@@ -48,7 +48,7 @@ class ListingUpdate(BaseModel):
 
 class RenterProfileCreate(BaseModel):
      user_id: int
-     is_active: bool
+     is_active: Optional[bool] = True
      raw_address: str
      locations_id: Optional[int] = None
      start_date: date
