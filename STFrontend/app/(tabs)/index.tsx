@@ -99,6 +99,14 @@ export default function TabsHome() {
 
   return (
     <View className="flex-1 justify-center items-center bg-white">
+      <View className="absolute top-12 left-4 right-4 z-10 flex-row justify-between items-center">
+          <TouchableOpacity
+            onPress={handleLogout}
+            className="px-3 py-1 bg-red-500 rounded-lg"
+          >
+            <Text className="text-white text-sm">Logout</Text>
+          </TouchableOpacity>
+        </View>
       <View
         pointerEvents="none"
         className="absolute inset-0 justify-center items-center z-0"
