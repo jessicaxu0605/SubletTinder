@@ -163,7 +163,7 @@ export default function RenterProfileSubletScreen() {
           </TouchableOpacity>
           <Text className="text-4xl font-bold mb-6">Sublet Info</Text>
           <View className="py-2">
-            <Text className="mb-1">Desired Location</Text>
+            <Text className="mb-1 font-medium">Desired Location</Text>
             <AddressAutocomplete
               value={form.raw_address}
               onSubmitCallback={(desc) => handleChange("raw_address", desc)}
@@ -184,7 +184,7 @@ export default function RenterProfileSubletScreen() {
             checkConstraintError={errors.check_constraint}
           />
           <View className="py-2 z-[10]">
-            <Text className="mb-1">Building Type</Text>
+            <Text className="mb-1 font-medium">Building Type</Text>
             <Select
               placeholder="Select"
               value={form.building_type_id}
@@ -198,7 +198,7 @@ export default function RenterProfileSubletScreen() {
             )}
           </View>
           <View className="py-2">
-            <Text className="mb-1">Budget</Text>
+            <Text className="mb-1 font-medium">Budget</Text>
             <Input
               placeholder="$"
               value={form.budget}
@@ -215,9 +215,9 @@ export default function RenterProfileSubletScreen() {
               <Text className="text-red-600 mb-2">{errors.budget}</Text>
             )}
           </View>
-          <View className="flex-row gap-4">
+          <View className="flex-row gap-4 mt-2">
             <View className="flex-1">
-              <Text className="mb-1">Bedrooms</Text>
+              <Text className="mb-1 font-medium">Bedrooms</Text>
               <Input
                 placeholder="#"
                 value={form.num_bedrooms}
@@ -235,7 +235,7 @@ export default function RenterProfileSubletScreen() {
               )}
             </View>
             <View className="flex-1">
-              <Text className="mb-1">Bathrooms</Text>
+              <Text className="mb-1 font-medium">Bathrooms</Text>
               <Input
                 placeholder="#"
                 value={form.num_bathrooms}

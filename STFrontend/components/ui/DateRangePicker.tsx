@@ -25,7 +25,7 @@ export default function DateRangePicker({
 }: DateRangePickerProps) {
   return (
     <View className="mb-2">
-      <Text className="mb-1">{label}</Text>
+      <Text className="mb-1 font-medium">{label}</Text>
       <View className="flex-row gap-4 py-5 border border-gray-300 rounded-xl mb-2 px-3 bg-white items-center">
         <View className="flex-1 items-center">
           <Text className="mb-1">Start Date</Text>
