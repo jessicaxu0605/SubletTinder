@@ -11,7 +11,7 @@ export default function Index() {
     if (isLoading) return;
     if (user) {
       // redirect to home page if user is logged in
-      router.replace("/(tabs)");
+      router.replace("/forms/update-listing?listingId=123");
     } else {
       // redirect to welcome page if user is not logged in
       router.replace("/auth/welcome");

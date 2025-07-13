@@ -129,17 +129,17 @@ async def get_listing(listing_id: int):
             loc.address_string,
             loc.latitude,
             loc.longitude,
-            bt.type AS building_type,
+            bt.id AS building_type_id,
             COALESCE(
                 (SELECT json_agg(json_build_object('url', p.url, 'label', p.label))
-                 FROM photos p
-                 WHERE p.listing_id = l.id), '[]'
+                FROM photos p
+                WHERE p.listing_id = l.id), '[]'
             ) AS photos,
             COALESCE(
-                (SELECT json_agg(a.name)
-                 FROM listing_amenities la
-                 JOIN amenities a ON la.amenity_id = a.id
-                 WHERE la.listing_id = l.id), '[]'
+                (SELECT json_agg(a.id)
+                FROM listing_amenities la
+                JOIN amenities a ON la.amenity_id = a.id
+                WHERE la.listing_id = l.id), '[]'
             ) AS amenities
         FROM listings l
         JOIN users u ON l.user_id = u.id
@@ -234,16 +234,16 @@ async def partial_update_listing(listing_id: int, listing: ListingUpdate):
 
             update_query = """
                 UPDATE listings SET
-                    start_date = $2,
-                    end_date = $3,
-                    target_gender = $4,
-                    asking_price = $5,
-                    num_bedrooms = $6,
-                    num_bathrooms = $7,
-                    pet_friendly = $8,
-                    utilities_incl = $9,
-                    description = $10
-                WHERE id = $11
+                    start_date = $1,
+                    end_date = $2,
+                    target_gender = $3,
+                    asking_price = $4,
+                    num_bedrooms = $5,
+                    num_bathrooms = $6,
+                    pet_friendly = $7,
+                    utilities_incl = $8,
+                    description = $9
+                WHERE id = $10
             """
 
             try:
@@ -263,19 +263,11 @@ async def partial_update_listing(listing_id: int, listing: ListingUpdate):
                 if listing.photos_to_add:
                     await insert_listing_photos_bulk(connection, listing_id, listing.photos_to_add)
 
-            except CheckViolationError as e:
-                # remaining constraints has no friendly language because we're not updating them
-                msg = str(e)
-                if "chk_start_date_future" in msg:
-                    detail = "Start date must be in the future."
-                elif "chk_term_length" in msg:
-                    detail = "The rental term must be at least 1 month, at most 1 year"
-                else:
-                    detail = "Invalid data provided."
-                raise HTTPException(status_code=400, detail=detail)
-
-            except PostgresError as e:
-                raise HTTPException(status_code=500, detail="A database error occurred.")
+            except Exception as e:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=f"Error updating listing: {str(e)}"
+                )
 
     return {"message": "Listing updated successfully"}
 

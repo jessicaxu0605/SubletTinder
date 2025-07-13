@@ -27,6 +27,7 @@ interface SelectProps {
   className?: string;
   searchPlaceholder?: string;
   searchable?: boolean;
+  disabled?: boolean; 
 }
 
 const Select = ({
@@ -37,6 +38,7 @@ const Select = ({
   className = "",
   searchPlaceholder = "Search...",
   searchable = true,
+  disabled = false
 }: SelectProps) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [search, setSearch] = useState("");
@@ -82,9 +84,12 @@ const Select = ({
     <>
       {/* Main select box */}
       <TouchableOpacity
-        className={`mb-3 bg-gray-100 border border-gray-300 rounded-xl px-3 py-4 min-h-[42px] justify-center ${className}`}
-        onPress={() => setModalVisible(true)}
-        activeOpacity={0.8}
+        className={`mb-3 border rounded-xl px-3 py-4 min-h-[42px] justify-center 
+          ${disabled ? "bg-gray-200 border-gray-200" : "bg-gray-100 border-gray-300"} ${className}`}
+        onPress={() => {
+          if (!disabled) setModalVisible(true);
+        }}
+        activeOpacity={disabled ? 1 : 0.8}
       >
         <Text className={selectedLabel ? "text-[#222]" : "text-[#888]"}>
           {selectedLabel || placeholder}
