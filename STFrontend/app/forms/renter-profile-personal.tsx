@@ -118,7 +118,7 @@ export default function RenterProfilePersonalScreen() {
               </View>
             )}
             <View className="py-2">
-              <Text className="mb-1">Age</Text>
+              <Text className="mb-1 font-medium">Age</Text>
               <Input
                 placeholder="Age"
                 value={form.age}
@@ -131,7 +131,7 @@ export default function RenterProfilePersonalScreen() {
               )}
             </View>
             <View className="py-2 z-[10]">
-              <Text className="mb-1">Gender</Text>
+              <Text className="mb-1 font-medium">Gender</Text>
               <View className="z-[10]">
                 <Select
                   placeholder="No preference"
@@ -146,7 +146,7 @@ export default function RenterProfilePersonalScreen() {
               </View>
             </View>
             <View className="py-2">
-              <Text className="mb-1">Bio</Text>
+              <Text className="mb-1 font-medium">Bio</Text>
               <Input
                 placeholder="Tell us about yourself"
                 value={form.bio}
