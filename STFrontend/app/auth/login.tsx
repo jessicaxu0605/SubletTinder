@@ -90,13 +90,13 @@ export default function LoginScreen() {
               <Text className="text-3xl font-bold text-gray-900 mb-2">
                 Welcome Back
               </Text>
-              {errors.global ? (
-                <Text className="text-red-600 mb-2">{errors.global}</Text>
-              ) : null}
               <Text className="text-gray-600 text-lg">
                 Sign in to your account
               </Text>
             </View>
+            {errors.global ? (
+              <Text className="text-red-600 mb-2">{errors.global}</Text>
+            ) : null}
 
             {/* Form */}
             <View className="flex-1">
