@@ -26,6 +26,17 @@ export async function apiPut(path: string, data?: any) {
   return res.json();
 }
 
+export async function apiPatch(path: string, data?: any) {
+  const res = await fetch(`${BASE_URL}${path}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: data ? JSON.stringify(data) : undefined,
+  });
+  if (!res.ok) throw new Error(await res.text());
+  return res.json();
+}
+
+
 // Authentication API functions
 export interface User {
   id: number;
