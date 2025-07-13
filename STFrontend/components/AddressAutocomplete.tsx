@@ -121,7 +121,18 @@ export function AddressAutocomplete({
             placeholder="Search"
             value={input}
             editable={false}
-            className={`bg-white ${disabled ? "opacity-50" : ""}`}
+            style={{
+              backgroundColor: disabled ? "#e5e7eb" : "#f3f4f6", 
+              borderColor: disabled ? "#e5e7eb" : "#d1d5db", 
+              borderWidth: 1,
+              borderRadius: 12,
+              paddingVertical: 16,
+              paddingHorizontal: 12,
+              minHeight: 42,
+              justifyContent: "center",
+              color: disabled ? "#9ca3af" : "#111827",
+              borderStyle: disabled ? "dashed" : "solid",
+            }}
           />
         </View>
       </TouchableOpacity>
