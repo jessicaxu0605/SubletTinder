@@ -56,3 +56,34 @@ export async function loginUser(data: LoginData): Promise<User> {
 export async function signupUser(data: SignupData): Promise<{ message: string; id: number }> {
   return apiPost('/signup', data);
 } 
+
+export async function fetchListingIds(userId: number): Promise<number[]> {
+  try {
+    const data = await apiGet(`/users/${userId}/listings`);
+    console.log(data)
+    return data.listing_ids ?? [];
+  } catch (error: any) {
+    throw error;
+  }
+}
+
+export async function fetchRenterProfileId(userId: number): Promise<number | null> {
+  try {
+    const res = await fetch(`${BASE_URL}/users/${userId}/renter_profile`);
+
+    if (res.status === 404) {
+      return null;
+    }
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(errorText);
+    }
+
+    const data = await res.json();
+    return data.renter_profile_id ?? null;
+  } catch (error) {
+    console.error("Error fetching renter profile ID:", error);
+    throw error;
+  }
+}

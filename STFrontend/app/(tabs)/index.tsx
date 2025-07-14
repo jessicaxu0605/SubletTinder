@@ -37,7 +37,7 @@ export default function TabsHome() {
       }
     };
     fetchMatches();
-  }, [user, isRenter]);
+  }, [user, isRenter, resourceId]);
 
   return (
     <View className="flex-1 bg-white">
