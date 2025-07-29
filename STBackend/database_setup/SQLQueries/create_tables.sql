@@ -60,6 +60,8 @@ create table if not exists listings (
 create index if not exists idx_listings_user_id on listings(user_id);
 create index if not exists idx_listings_locations_id on listings(locations_id);
 create index if not exists idx_listings_building_type_id on listings(building_type_id);
+create index if not exists idx_listings_is_active on listings(is_active);
+create index if not exists idx_listings_required_attributes on listings(is_active, user_id, num_bedrooms, start_date, end_date);
 
 create table if not exists photos (
     listing_id bigint not null references listings(id) on delete cascade,
@@ -102,6 +104,7 @@ create table if not exists renter_profiles (
 create index if not exists idx_renter_profiles_user_id on renter_profiles(user_id);
 create index if not exists idx_renter_profiles_locations_id on renter_profiles(locations_id);
 create index if not exists idx_renter_profiles_building_type_id on renter_profiles(building_type_id);
+create index if not exists idx_renter_profiles_is_active on renter_profiles(is_active);
 
 create table if not exists renter_on_listing (
     id bigserial primary key,

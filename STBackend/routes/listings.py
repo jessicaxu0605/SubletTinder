@@ -345,8 +345,8 @@ async def get_renter_matches(listing_id: int):
 WITH score_params AS (
     SELECT
         100.0 AS base_score,
-        1.01 AS distance_factor_base,
-        0.995 AS price_factor_base,
+        0.99 AS distance_factor_base,
+        0.997 AS price_factor_base,
         1.2 AS bathroom_factor_base,
         100 AS utilities_adjustment,
         1.7 AS gender_factor
