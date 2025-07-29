@@ -32,7 +32,6 @@ id | first_name | last_name | password | email | profile_photo
 1001 | Anika | Sharma | $2b$12$5/EUu | a642shar@uwaterloo.ca |   
 (1 rows)
 
-
 -- Feature 6 Output --
  id | user_id | is_active | asking_price | num_bedrooms | num_bathrooms | start_date |  end_date  | pet_friendly  | utilities_incl | locations_id | building_type_id | target_gender  |                    address_string                     |   distance_km   
 ----|---------|-----------|--------------|--------------|---------------|------------|------------|---------------|----------------|--------------|------------------|----------------|-------------------------------------------------------|------------------
@@ -40,6 +39,12 @@ id | first_name | last_name | password | email | profile_photo
  12 |     241 | t         |     3582.88  |            4 |             2 | 2026-05-09 | 2027-04-14 | t             | t              |          763 |               15 | non-binary     | 660 Ballantree Rd, West Vancouver, BC V7S 1W3, Canada | 20.272039471293937
 ...
 (42 rows)
+
+-- Advanced Feature 5 Output --
+id | user_id | is_active | locations_id | start_date  | end_date    | target_gender | asking_price | building_type_id | num_bedrooms | num_bathrooms | pet_friendly | utilities_incl | description                                                                                     | score
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1  | 873     | t         | 962          | 2026-01-03 | 2026-12-01 | female        | 4295.76      | 28               | 1            | 3             | f            | f              | Affordable sublet in a quiet neighborhood, close to grocery stores and bus stops.                 | 1
+(1 rows)
 
 
 
