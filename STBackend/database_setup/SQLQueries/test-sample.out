@@ -41,6 +41,19 @@ id | first_name | last_name | password | email | profile_photo
  66 |      47 | t         |     3618.01  |            5 |             1 | 2025-10-09 | 2026-09-24 | t             | f              |           56 |               18 | female         | 3751 Main St, Toronto, BC     | 46.04513971837474
 (1 row)
 
+-- Feature 7 Output --
+id | asking_price | num_bedrooms | num_bathrooms | start_date | end_date | address_string | building_type | lister_name | photo_url | photo_label | score
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+889 | 1503.8 | 4 | 3 | 2026-01-21 | 2026-08-11 | 5533 Highbury St, Vancouver, BC V6N 1Y7, Canada | Carriage House | Sonya | https://cdn.realtor.ca/listing/TS638874926389170000/reb82/highres/6/c12267806_16.jpg | bathroom | 12633.892194325297
+595 | 3928.07 | 4 | 1 | 2026-01-09 | 2026-12-06 | 104 Sophia St, Vancouver, BC V5X 4N6, Canada | Bungalow | Madison | null | null | 0.07905900314754051
+130 | 4380.12 | 5 | 3 | 2026-01-17 | 2026-08-14 | 3206 W 33rd Ave, Vancouver, BC V6N 2G9, Canada | Studio Apartment | Holly | https://cdn.realtor.ca/listing/TS638874952597630000/reb82/highres/1/n12267821_3.jpg | bedroom | 0.016954443525594706
+(3 rows)
+
+-- Feature 8 Output --
 
 
+-- Feature 9 Output --
+
+
+-- Feature 10 Output --
 

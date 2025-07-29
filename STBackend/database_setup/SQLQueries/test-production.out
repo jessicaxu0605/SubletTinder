@@ -40,11 +40,46 @@ id | first_name | last_name | password | email | profile_photo
 ...
 (42 rows)
 
--- Advanced Feature 5 Output --
+-- Feature 7 Output --
+id | asking_price | num_bedrooms | num_bathrooms | start_date | end_date | address_string | building_type | lister_name | photo_url | photo_label | score
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+640 | 556.46 | 2 | 3 | 2025-08-26 | 2025-12-30 | 296 Hiawatha Dr, Waterloo, ON N2L 2W1, Canada | Victorian House | Charles | https://cdn.realtor.ca/listing/TS638874926389170000/reb82/highres/6/c12267806_10.jpg | bathroom | 168453.76618726083
+919 | 512.23 | 2 | 1 | 2025-09-05 | 2025-12-22 | 525 Laurelwood Dr, Waterloo, ON N2V 2N1, Canada | Victorian House | Clayton | null | null | 149463.0329399204
+521 | 523.83 | 3 | 1 | 2025-09-03 | 2025-12-23 | 745 Bridge St W, Waterloo, ON N2V 2G6, Canada | Skyscraper | Amy | https://cdn.realtor.ca/listing/TS638874932825230000/reb82/highres/2/w12267642_31.jpg | kitchen | 86492.88876368738
+1004 | 1000 | 4 | 2 | 2025-09-04 | 2025-12-26 | 252 Phillip St, Waterloo, ON N2L 0E1, Canada | Apartment | Elizabeth | null | null | 27257.474962382286
+486 | 1013.39 | 3 | 3 | 2025-08-27 | 2025-12-28 | 153 Westvale Dr, Waterloo, ON N2T 1B7, Canada | Townhouse | Tammy | null | null | 17292.017080813097
+32 | 1114.69 | 4 | 3 | 2025-09-01 | 2025-12-21 | 126 Union St E, Waterloo, ON N2J 1C5, Canada | Row House | Monica | null | null | 15674.499768373506
+152 | 1156.55 | 5 | 1 | 2025-08-27 | 2025-12-27 | 1234 Township Rd 37, Waterloo, ON N2J 4G8, Canada | Coach House | Lindsey | https://cdn.realtor.ca/listing/TS638874956544630000/reb76/highres/5/x12268075_4.jpg | exterior | 9065.583158413381
+229 | 1049.35 | 4 | 1 | 2025-09-05 | 2025-12-29 | 230 Harvard Pl, Waterloo, ON N2J 4G2, Canada | Ranch-Style House | Natalie | https://cdn.realtor.ca/listing/TS638874952597630000/reb82/highres/1/n12267821_3.jpg | living_room | 6144.2148356487505
+1003 | 1333 | 4 | 2 | 2025-08-26 | 2025-12-27 | 252 Phillip St, Waterloo, ON N2L 0E1, Canada | Apartment | Elizabeth | null | null | 5135.367285887922
+581 | 1448.83 | 2 | 2 | 2025-08-26 | 2025-12-29 | 100 Westvale Dr, Waterloo, ON N2T 1J2, Canada | Triplex | Kristin | null | null | 986.3751523532662
+962 | 1569.06 | 2 | 1 | 2025-08-25 | 2025-12-30 | 863 Bridge St E, Waterloo, ON N0B 1M0, Canada | Triplex | Dana | https://cdn.realtor.ca/listing/TS638874902856100000/reb82/highres/4/x12267474_4.jpg | hallway | 787.8404432954449
+412 | 1579.28 | 4 | 1 | 2025-09-03 | 2025-12-24 | 16 Kraft Dr, Waterloo, ON N2K 1G5, Canada | Penthouse | Richard | null | null | 738.5325236563034
+131 | 1570.77 | 3 | 2 | 2025-08-28 | 2025-12-25 | 600 Regional Rd 40, Waterloo, ON N2J 3Z4, Canada | Coach House | Elizabeth | https://cdn.realtor.ca/listing/TS638874932825230000/reb82/highres/2/w12267642_1.jpg | bedroom | 544.4540312658971
+300 | 1909.75 | 3 | 2 | 2025-09-01 | 2025-12-22 | 1234 Township Rd 37, Waterloo, ON N2J 4G8, Canada | Condominium | David | null | null | 166.2762229421126
+749 | 2031.75 | 3 | 2 | 2025-09-01 | 2025-12-29 | 1189 Weeby Place, Waterloo, ON N2J 4G8, Canada | Penthouse | Tyler | null | null | 93.65025178097459
+850 | 2124.77 | 3 | 1 | 2025-08-31 | 2025-12-27 | 500 Fischer-Hallman Rd N, Waterloo, ON N2L 0B1, Canada | Chalet | Jason | https://cdn.realtor.ca/listing/TS638874928307700000/reb82/highres/7/c12267727_25.jpg | exterior | 68.21472151829369
+588 | 2554.51 | 2 | 2 | 2025-09-01 | 2025-12-23 | 355 Erb St. W, Waterloo, ON N2L 1W4, Canada | Farmhouse | Michael | https://cdn.realtor.ca/listing/TS638874932825230000/reb82/highres/2/w12267642_2.jpg | hallway | 6.331490465853413
+317 | 3101.44 | 4 | 1 | 2025-09-02 | 2025-12-23 | 1018 Martin Creek Rd, Waterloo, ON N2J 3Z4, Canada | Tudor House | Nicholas | https://cdn.realtor.ca/listing/TS638874950527400000/reb82/highres/6/e12267866_16.jpg | bedroom | 0.3477449166076887
+468 | 3235.96 | 2 | 2 | 2025-08-28 | 2025-12-25 | 271 Pineland Pl, Waterloo, ON N2T 2S7, Canada | Georgian House | Emily | https://cdn.realtor.ca/listing/TS638874932825230000/reb82/highres/2/w12267642_2.jpg | exterior | 0.31306196603443504
+717 | 3202.31 | 2 | 1 | 2025-09-04 | 2025-12-29 | 1018 Martin Creek Rd, Waterloo, ON N2J 3Z4, Canada | Condominium | Stephanie | null | null | 0.12705244279917516
+489 | 3329.96 | 2 | 1 | 2025-09-02 | 2025-12-27 | 104 Valley Ridge Crescent, Waterloo, ON N2T 1X2, Canada | Detached House | Laura | null | null | 0.10911881825341489
+252 | 3538.26 | 5 | 2 | 2025-09-02 | 2025-12-20 | 64 Moore Ave S, Waterloo, ON N2J 1W9, Canada | High-Rise Apartment | Melinda | null | null | 0.04598467180740952
+880 | 3866.85 | 3 | 1 | 2025-08-26 | 2025-12-25 | 230 Harvard Pl, Waterloo, ON N2J 4G2, Canada | Fourplex | Destiny | https://cdn.realtor.ca/listing/TS638874950527400000/reb82/highres/6/e12267866_1.jpg | hallway | 0.0045185219226500425
+840 | 4315.61 | 5 | 1 | 2025-09-01 | 2025-12-20 | 153 Westvale Dr, Waterloo, ON N2T 1B7, Canada | Contemporary House | Vanessa | null | null | 0.0007777085327418809
+105 | 4311.64 | 3 | 1 | 2025-08-25 | 2025-12-20 | 270 Sweet Gale St, Waterloo, ON N2J 3Z4, Canada | Bungalow | Courtney | https://cdn.realtor.ca/listing/TS638874902856100000/reb82/highres/4/x12267474_2.jpg | kitchen | 0.0004902762806160598
+716 | 4818.07 | 2 | 3 | 2025-08-25 | 2025-12-26 | 556 Mariner Dr, Waterloo, ON N2K 3Y8, Canada | Skyscraper | Travis | null | null | 0.00008390295283124823
+291 | 4999.12 | 2 | 2 | 2025-08-25 | 2025-12-23 | 1942 Lobsinger Line, Waterloo, ON N2J 4G8, Canada | Mixed-Use Building | Christina | https://cdn.realtor.ca/listing/TS638874956544630000/reb76/highres/5/x12268075_15.jpg | exterior | 0.00003139896205675568
+(27 rows)
+
+-- Feature 8 Output --
+
+
+-- Feature 9 Output --
+
+
+-- Feature 10 Output --
 id | user_id | is_active | locations_id | start_date  | end_date    | target_gender | asking_price | building_type_id | num_bedrooms | num_bathrooms | pet_friendly | utilities_incl | description                                                                                     | score
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 1  | 873     | t         | 962          | 2026-01-03 | 2026-12-01 | female        | 4295.76      | 28               | 1            | 3             | f            | f              | Affordable sublet in a quiet neighborhood, close to grocery stores and bus stops.                 | 1
 (1 rows)
-
-
-
