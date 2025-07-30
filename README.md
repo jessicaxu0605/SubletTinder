@@ -21,7 +21,7 @@ The following is a list of all of the features in our report and where they can 
 
 ### Advanced
 - R11: Function to build top 50 potential listings: `STBackend/database_setup/SQLQueries/create_functions.sql`
-- R12: Rank and retrieve 50 listing candidates (extension of R11): `STBackend/routes/listings.py`
+- R12: Rank and retrieve 50 listing candidates: `STBackend/routes/listings.py`
 - R13: Trigger to delete swipes on listing deactivate: `STBackend/database_setup/SQLQueries/deactivate_functions.sql`
 - R14: View that generates mutual matches: `STBackend/database_setup/SQLQueries/create_view.sql`
 - R15: Suggest listings based on user swipe patterns: `STBackend/routes/listings.py`
