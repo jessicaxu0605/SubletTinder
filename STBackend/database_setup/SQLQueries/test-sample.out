@@ -57,3 +57,10 @@ id | asking_price | num_bedrooms | num_bathrooms | start_date | end_date | addre
 
 -- Feature 10 Output --
 
+
+-- Feature 14 Output --
+ listing_id | renter_profile_id | compatibility_score | compatibility_percent | compatibility_label 
+------------+-------------------+----------------------+------------------------+----------------------
+         16 |                15 |                    1 |                     14 | Poor Match
+(1 row)
+

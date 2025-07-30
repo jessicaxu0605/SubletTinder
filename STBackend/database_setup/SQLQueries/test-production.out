@@ -83,3 +83,9 @@ id | user_id | is_active | locations_id | start_date  | end_date    | target_gen
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 1  | 873     | t         | 962          | 2026-01-03 | 2026-12-01 | female        | 4295.76      | 28               | 1            | 3             | f            | f              | Affordable sublet in a quiet neighborhood, close to grocery stores and bus stops.                 | 1
 (1 rows)
+
+-- Feature 14 Output --
+ listing_id | renter_profile_id | compatibility_score | compatibility_percent | compatibility_label 
+------------+-------------------+----------------------+------------------------+----------------------
+         16 |                15 |                    1 |                     14 | Poor Match
+(1 row)
