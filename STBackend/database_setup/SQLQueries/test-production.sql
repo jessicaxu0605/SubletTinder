@@ -78,6 +78,9 @@ SELECT id, email, password, first_name, last_name, profile_photo FROM users WHER
 -- Feature 5: Delete user
 DELETE from users WHERE id = 1001 RETURNING *;
 
+-- Advanced Feature 1: Listing Recommendation Shortlisting
+SELECT * FROM get_listing_candidates(3);
+
 -- Advanced Feature 5: Collaborative filtering
 WITH
   current_likes AS (
